@@ -3,7 +3,7 @@ import Link from "next/link"
 export default function Home() {
   return (
     <div className="h-screen flex flex-col items-center justify-center bg-black text-white gap-5">
-      
+
       <h1 className="text-5xl font-bold">
         Todo App 🚀
       </h1>
