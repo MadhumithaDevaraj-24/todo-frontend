@@ -40,8 +40,6 @@ export default function Signin() {
 
       const data = await response.json()
 
-      console.log(data)
-
       if (data.jwt) {
 
         localStorage.setItem(
@@ -54,12 +52,9 @@ export default function Signin() {
           JSON.stringify(data.user)
         )
 
-        alert("🎉 Login Successful")
-
         router.push("/dashboard")
-      }
 
-      else {
+      } else {
 
         alert("Invalid Credentials")
       }
@@ -79,115 +74,165 @@ export default function Signin() {
 
   return (
 
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-pink-100 to-purple-100 flex justify-center items-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-purple-100 to-pink-100 flex items-center justify-center p-6">
 
-      {/* MAIN CARD */}
+      <div className="w-full max-w-6xl grid lg:grid-cols-2 bg-white rounded-[40px] shadow-2xl overflow-hidden">
 
-      <div className="backdrop-blur-lg bg-white/80 border border-white/40 p-10 rounded-[35px] shadow-2xl w-full max-w-md">
+        {/* LEFT SIDE */}
 
-        {/* TOP SECTION */}
+        <div className="hidden lg:flex flex-col justify-center bg-gradient-to-br from-purple-600 via-pink-500 to-indigo-600 text-white p-16 relative overflow-hidden">
 
-        <div className="text-center mb-8">
+          <div className="absolute top-0 left-0 w-full h-full bg-black/10"></div>
 
-          <div className="text-6xl mb-4">
-            💜
+          <div className="relative z-10">
+
+            <h1 className="text-6xl font-extrabold leading-tight">
+              Welcome
+              <br />
+              Back 👋
+            </h1>
+
+            <p className="mt-6 text-lg text-purple-100 leading-8">
+              Manage your tasks, organize your workflow,
+              and boost your productivity with your
+              modern Todo Dashboard.
+            </p>
+
+            <div className="mt-10 flex gap-4">
+
+              <div className="bg-white/20 backdrop-blur-md px-5 py-4 rounded-2xl">
+                <h2 className="text-3xl font-bold">
+                  100%
+                </h2>
+
+                <p className="text-sm mt-1">
+                  Productivity
+                </p>
+              </div>
+
+              <div className="bg-white/20 backdrop-blur-md px-5 py-4 rounded-2xl">
+                <h2 className="text-3xl font-bold">
+                  24/7
+                </h2>
+
+                <p className="text-sm mt-1">
+                  Access
+                </p>
+              </div>
+
+            </div>
+
           </div>
-
-          <h1 className="text-5xl font-extrabold text-purple-700">
-            Welcome Back
-          </h1>
-
-          <p className="text-gray-500 mt-3 text-lg">
-            Login to continue managing your tasks ✨
-          </p>
 
         </div>
 
-        {/* INPUTS */}
+        {/* RIGHT SIDE */}
 
-        <div className="flex flex-col gap-5">
+        <div className="p-8 md:p-14 flex flex-col justify-center">
 
-          {/* EMAIL */}
+          {/* TOP */}
 
-          <div>
+          <div className="mb-10">
 
-            <label className="text-purple-700 font-semibold mb-2 block">
-              Email Address
-            </label>
+            <h2 className="text-5xl font-extrabold text-gray-800">
+              Login
+            </h2>
 
-            <input
-              className="w-full border-2 border-purple-200 rounded-2xl p-4 outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-200 transition-all bg-white text-black placeholder-gray-500"
-
-              placeholder="Enter your email"
-
-              value={email}
-
-              onChange={(e) =>
-                setEmail(e.target.value)
-              }
-            />
+            <p className="text-gray-500 mt-3 text-lg">
+              Sign in to continue to your dashboard
+            </p>
 
           </div>
 
-          {/* PASSWORD */}
+          {/* FORM */}
 
-          <div>
+          <div className="flex flex-col gap-6">
 
-            <label className="text-purple-700 font-semibold mb-2 block">
-              Password
-            </label>
+            {/* EMAIL */}
 
-            <input
-              className="w-full border-2 border-purple-200 rounded-2xl p-4 outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-200 transition-all bg-white text-black placeholder-gray-500"
+            <div>
 
-              type="password"
+              <label className="text-gray-700 font-semibold block mb-3">
+                Email Address
+              </label>
 
-              placeholder="Enter your password"
+              <input
+                type="email"
 
-              value={password}
+                placeholder="Enter your email"
 
-              onChange={(e) =>
-                setPassword(e.target.value)
+                value={email}
+
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
+
+                className="w-full border border-gray-300 rounded-2xl p-5 text-black placeholder-gray-400 outline-none focus:ring-4 focus:ring-purple-200 focus:border-purple-400 transition-all"
+              />
+
+            </div>
+
+            {/* PASSWORD */}
+
+            <div>
+
+              <label className="text-gray-700 font-semibold block mb-3">
+                Password
+              </label>
+
+              <input
+                type="password"
+
+                placeholder="Enter your password"
+
+                value={password}
+
+                onChange={(e) =>
+                  setPassword(e.target.value)
+                }
+
+                className="w-full border border-gray-300 rounded-2xl p-5 text-black placeholder-gray-400 outline-none focus:ring-4 focus:ring-purple-200 focus:border-purple-400 transition-all"
+              />
+
+            </div>
+
+            {/* LOGIN BUTTON */}
+
+            <button
+              onClick={handleLogin}
+
+              className="mt-3 bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 hover:scale-[1.02] hover:shadow-2xl transition-all duration-300 text-white p-5 rounded-2xl shadow-xl font-bold text-lg"
+            >
+
+              {
+                loading
+                  ? "Signing In..."
+                  : "🚀 Login to Dashboard"
               }
-            />
+
+            </button>
 
           </div>
 
-          {/* BUTTON */}
+          {/* FOOTER */}
 
-          <button
-            className="mt-3 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:scale-105 hover:shadow-2xl transition-all duration-300 text-white p-4 rounded-2xl shadow-lg font-bold text-lg"
+          <div className="mt-10 text-center">
 
-            onClick={handleLogin}
-          >
+            <p className="text-gray-500">
+              Don’t have an account?
+            </p>
 
-            {
-              loading
-                ? "Logging In..."
-                : "🚀 Login"
-            }
+            <button
+              onClick={() =>
+                router.push("/signup")
+              }
 
-          </button>
+              className="mt-3 text-purple-600 font-bold hover:text-pink-500 transition-all"
+            >
+              Create New Account
+            </button>
 
-        </div>
-
-        {/* FOOTER */}
-
-        <div className="text-center mt-8">
-
-          <p className="text-gray-500">
-            Don’t have an account?
-          </p>
-
-          <button
-            className="text-purple-600 font-bold mt-2 hover:text-pink-500 transition"
-
-            onClick={() =>
-              router.push("/signup")
-            }
-          >
-            Create Account
-          </button>
+          </div>
 
         </div>
 
