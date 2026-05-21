@@ -1,97 +1,192 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
-export default function Signup(){
+export default function Signup() {
 
-  const [username,setUsername] = useState("")
-  const [email,setEmail] = useState("")
-  const [password,setPassword] = useState("")
+  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const router = useRouter()
 
   const handleSignup = async () => {
 
-    const response = await fetch(
-      "http://localhost:1337/api/auth/local/register",
-      {
-        method:"POST",
+    try {
 
-        headers:{
-          "Content-Type":"application/json"
-        },
+      const response = await fetch(
+        "http://localhost:1337/api/auth/local/register",
+        {
+          method: "POST",
 
-        body: JSON.stringify({
-          username,
-          email,
-          password
-        })
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            username,
+            email,
+            password
+          })
+        }
+      )
+
+      const data = await response.json()
+
+      console.log(data)
+
+      if (data.jwt) {
+
+        alert("🎉 Signup Successful")
+
+        setUsername("")
+        setEmail("")
+        setPassword("")
+
+      } else {
+
+        alert(data.error.message)
       }
-    )
 
-    const data = await response.json()
+    } catch (error) {
 
-    console.log(data)
+      console.log(error)
 
-    alert("Signup Successful")
+      alert("Something went wrong")
+    }
   }
 
-  return(
+  return (
 
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-pink-100 to-purple-100 flex justify-center items-center">
+    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 flex justify-center items-center p-6">
 
-      <div className="bg-white p-10 rounded-3xl shadow-2xl w-[400px]">
+      {/* MAIN CARD */}
 
-        {/* HEADING */}
+      <div className="backdrop-blur-lg bg-white/80 border border-white/40 p-10 rounded-[35px] shadow-2xl w-full max-w-md">
 
-        <h1 className="text-4xl font-bold text-center text-purple-600 mb-8">
-           Signup 
-        </h1>
+        {/* TOP SECTION */}
 
-        {/* INPUTS */}
+        <div className="text-center mb-8">
+
+          <div className="text-6xl mb-4">
+            🌸
+          </div>
+
+          <h1 className="text-5xl font-extrabold text-purple-700">
+            Signup
+          </h1>
+
+          <p className="text-gray-500 mt-3 text-lg">
+            Create your beautiful todo account ✨
+          </p>
+
+        </div>
+
+        {/* FORM */}
 
         <div className="flex flex-col gap-5">
 
-          <input
-            className="border-2 border-purple-200 rounded-2xl p-4 outline-none focus:border-pink-400"
+          {/* USERNAME */}
 
-            placeholder="Username"
+          <div>
 
-            onChange={(e)=>
-              setUsername(e.target.value)
-            }
-          />
+            <label className="text-purple-700 font-semibold mb-2 block">
+              Username
+            </label>
 
-          <input
-            className="border-2 border-purple-200 rounded-2xl p-4 outline-none focus:border-pink-400"
+            <input
+              className="w-full border-2 border-purple-200 rounded-2xl p-4 outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-200 transition-all bg-white text-black placeholder-gray-500"
 
-            placeholder="Email"
+              placeholder="Enter username"
 
-            onChange={(e)=>
-              setEmail(e.target.value)
-            }
-          />
+              value={username}
 
-          <input
-            className="border-2 border-purple-200 rounded-2xl p-4 outline-none focus:border-pink-400"
+              onChange={(e) =>
+                setUsername(e.target.value)
+              }
+            />
 
-            type="password"
+          </div>
 
-            placeholder="Password"
+          {/* EMAIL */}
 
-            onChange={(e)=>
-              setPassword(e.target.value)
-            }
-          />
+          <div>
+
+            <label className="text-purple-700 font-semibold mb-2 block">
+              Email Address
+            </label>
+
+            <input
+              className="w-full border-2 border-purple-200 rounded-2xl p-4 outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-200 transition-all bg-white text-black placeholder-gray-500"
+
+              placeholder="Enter email"
+
+              value={email}
+
+              onChange={(e) =>
+                setEmail(e.target.value)
+              }
+            />
+
+          </div>
+
+          {/* PASSWORD */}
+
+          <div>
+
+            <label className="text-purple-700 font-semibold mb-2 block">
+              Password
+            </label>
+
+            <input
+              className="w-full border-2 border-purple-200 rounded-2xl p-4 outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-200 transition-all bg-white text-black placeholder-gray-500"
+
+              type="password"
+
+              placeholder="Enter password"
+
+              value={password}
+
+              onChange={(e) =>
+                setPassword(e.target.value)
+              }
+            />
+
+            <p className="text-sm text-gray-400 mt-2">
+              Password should be secure 🔒
+            </p>
+
+          </div>
 
           {/* BUTTON */}
 
           <button
-            className="bg-gradient-to-r from-pink-500 to-purple-500 hover:scale-105 transition text-white p-4 rounded-2xl shadow-lg font-bold"
+            className="mt-3 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:scale-105 hover:shadow-2xl transition-all duration-300 text-white p-4 rounded-2xl shadow-lg font-bold text-lg"
 
             onClick={handleSignup}
           >
-            Create Account
+            🚀 Create Account
           </button>
 
+        </div>
+
+        {/* FOOTER */}
+
+        <div className="text-center mt-8">
+
+          <p className="text-gray-500">
+            Already have an account?
+          </p>
+
+          <button
+            className="text-purple-600 font-bold mt-2 hover:text-pink-500 transition"
+
+            onClick={() =>
+              router.push("/signin")
+            }
+          >
+            Login Here
+          </button>
         </div>
 
       </div>
